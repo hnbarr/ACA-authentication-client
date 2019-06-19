@@ -17,6 +17,19 @@ const isAuth = (props) => {
   return false
 }
 
+// const PrivateRoute = ({ component: Component, ...rest }) => {
+//   return (
+//     <Route {...rest} render={props =>
+//         isAuth() === true ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+//         )
+//       }
+//     />
+//   );
+// };
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
     isAuth(props) === true ? <Component {...props} /> : <Redirect to='/' />
