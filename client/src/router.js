@@ -2,20 +2,24 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 import { Redirect } from 'react-router-dom'
 import cookie from 'cookie'
+import jwt from 'jsonwebtoken'
 import Home from './components/Home'
 import Dashboard from './containers/Dashboard'
 import NotFound from './components/NotFound'
 
 
-const isAuth = () => {
+const isAuth = (props) => {
   const cookies = cookie.parse(document.cookie)
-  if (cookies.id_token) return true
+  if (cookies.id_token) {
+    props.user = jwt.decode(cookies.id_token)
+    return true
+  }
   return false
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    isAuth() === true ? <Component {...props} /> : <Redirect to='/' />
+    isAuth(props) === true ? <Component {...props} /> : <Redirect to='/' />
   )} />
 )
 
