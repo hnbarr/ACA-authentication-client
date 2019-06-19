@@ -11,6 +11,12 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res) => {
   // contents of login route
+  AuthController.Login(req.body)
+    .then(user => {
+      if(!user) return res.status(404).send('user could not be found')
+      let token = jwt.sign(user.toJSON(), 'secret')
+      return res.send(token)
+    })
 })
 
 module.exports = router

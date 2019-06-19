@@ -43,8 +43,9 @@ class Login extends Component {
     })
     .then(token => {
       // create cookie here
+      // debugger
       const payload = jwt.verify(token, 'secret')
-      return this.props.login(payload._doc)
+      return this.props.login(payload)
     })
     .catch(err => this.setState({ message: err.message }))
     .then(() => this.setState({ userName: '', password: '' }))
